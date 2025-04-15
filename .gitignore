@@ -1,0 +1,68 @@
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea
+/idea/
+/idea
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+*.png
+
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Results.png ###
+.search_results.png
+**/search_results.png
+/search_results.png
+screenshots/*.png
+
+### Allure ###
+/target
+.target
+/target/
+allure-results/
+.allure
+/allure
+/allure/
+
+### Trace ###
+/trace
+.trace
+/trace/
+
+### Surefire ###
+.reports
+/reports
+/reports/

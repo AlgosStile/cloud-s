@@ -1,0 +1,9 @@
+allure:
+  report:
+    enable: true
+  results:
+    directory: ./target/allure-results
+  environment:
+    runtime: Local
+    browser: Playwright
+    version: 1.50.0

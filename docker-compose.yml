@@ -1,0 +1,70 @@
+version: '3.8'
+
+networks:
+  microservices-net:
+    driver: bridge
+    name: microservices-net
+
+services:
+  microservice1:
+    build: ./microservice1
+    networks:
+      - microservices-net
+    ports:
+      - "8083:8083"
+    expose:
+      - "8083"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/actuator/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  microservice2:
+    build: ./microservice2
+    networks:
+      - microservices-net
+    ports:
+      - "8082:8082"
+    expose:
+      - "8082"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  gateway:
+    build: ./gateway
+    networks:
+      - microservices-net
+    ports:
+      - "8084:8080"
+    depends_on:
+      microservice1:
+        condition: service_healthy
+      microservice2:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+
+  integration-tests:
+    build: .  # Путь к Dockerfile тестов
+    networks:
+      - microservices-net
+    depends_on:
+      gateway:
+        condition: service_healthy
+    environment:
+      - ENVIRONMENT=docker
+      - GATEWAY_URL=http://gateway:8080
+      - SERVICEA_ENDPOINT=/serviceA/hello
+      - SERVICEB_ENDPOINT=/serviceB/hello
+    command: >
+      sh -c "sleep 15 && mvn test -B"
