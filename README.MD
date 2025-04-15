@@ -303,6 +303,3 @@ cd ../gateway && mvn clean install
 
 #### Запустить все сервисы
 `docker compose up --abort-on-container-exit`
-
-### Запуск образа:
-`docker build --no-cache -t integration-tests .`
